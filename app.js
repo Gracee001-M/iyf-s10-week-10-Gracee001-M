@@ -50,3 +50,31 @@ app.get('/posts', (req, res) => {
         filters: { category, sort }
     });
 });
+
+const express = require('express');
+const app = express();
+
+// Example: Get all users with optional filters
+app.get('/users', (req, res) => {
+    const { role = 'all', active = true } = req.query;
+    res.json({ message: 'Listing users', filters: { role, active } });
+});
+
+// Example: Get a single user by ID
+app.get('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    res.json({ message: `Fetching user ${userId}` });
+});
+
+// Example: Handle errors
+app.get('/fail', (req, res) => {
+    res.status(500).json({ error: 'Internal server error' });
+});
+
+// Example: Redirect old route
+app.get('/home', (req, res) => {
+    res.redirect('/dashboard');
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+
